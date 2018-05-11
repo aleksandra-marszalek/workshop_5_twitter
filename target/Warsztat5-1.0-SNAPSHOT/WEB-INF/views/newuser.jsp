@@ -8,6 +8,7 @@
 <body>
 <h1>Add user</h1>
 <form:form method="post" modelAttribute="user">
+    <p>${info}</p>
     Username: <form:input path="username" placeholder="username"/>
     <form:errors path="username"/>
 

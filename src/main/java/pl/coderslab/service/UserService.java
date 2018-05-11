@@ -40,6 +40,20 @@ public class UserService {
         return false;
     }
 
+    public boolean checkEmail (User user) {
+            String email = user.getEmail();
+            User userEx = findByEmail(email);
+            if (userEx == null) {
+                return false;
+            }
+            return true;
+
+    }
+
+    public void save (User user) {
+        userRepository.save(user);
+    }
+
 
 
 

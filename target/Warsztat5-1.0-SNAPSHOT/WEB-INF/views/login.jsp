@@ -6,8 +6,9 @@
 </head>
 <body>
 <h1>Log in</h1>
-<p>${info}</p>
+
 <form action="/login" method="POST">
+    <p>${info}</p>
     <label>
         Email:
         <input type="text" name="email">

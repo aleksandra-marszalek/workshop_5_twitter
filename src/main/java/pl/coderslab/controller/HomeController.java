@@ -18,8 +18,13 @@ public class HomeController {
     UserService userService;
 
     @GetMapping("/")
-    public String home () {
-        return "home";
+    public String index (HttpSession httpSession) {
+        if (httpSession.getAttribute("id") == null) {
+            return "index";
+        } else {
+            return "home";
+        }
+
     }
 
     @GetMapping("/newuser")
@@ -29,18 +34,18 @@ public class HomeController {
     }
 
     @PostMapping("/newuser")
-    public String addUser(@Valid @ModelAttribute User user, BindingResult result) {
+    public String addUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "newuser";
         }
+        if (userService.checkEmail(user)){
+            model.addAttribute("info", "This email already exists");
+            return "newuser";
+        }
         userService.addUser(user);
-        return "redirect:/user/all";
+        return "confirmation";
     }
-//    @PostMapping("/newuser")
-//    public String addUser(@ModelAttribute User user) {
-//        userService.addUser(user);
-//        return "redirect:/user/all";
-//    }
+
 
     @GetMapping("/login")
     public String login() {
@@ -52,7 +57,7 @@ public class HomeController {
         try {
             User user = userService.findByEmail(email);
             if (userService.checkUser(user, password)) {
-                httpSession.setAttribute("id", user.getId());
+                httpSession.setAttribute("id", user.getId().toString());
                 return "/home";
             } else {
                 model.addAttribute("info", "wrong password");
@@ -61,6 +66,18 @@ public class HomeController {
             model.addAttribute("info", "wrong email address");
         }
         return ("login");
+    }
+
+
+    @PostMapping("/user/enable/{id}")
+    public String enable(@ModelAttribute User user, @PathVariable long id, @RequestParam String agree, Model model, HttpSession httpSession) {
+        if (agree.equals("yes")) {
+            user.setEnabled(true);
+            httpSession.setAttribute("id", user.getId());
+            return "home";
+        } else {
+            return "index";
+        }
     }
 
 }

@@ -14,5 +14,8 @@
 <h1>Homepage</h1>
 <p>Welcome to Twitter 2.0.</p>
 
+<a href="/login"> Log in </a>
+<a href="/newuser"> New user </a>
+
 </body>
 </html>

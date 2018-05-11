@@ -17,11 +17,27 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public String encrypt (String password) {
+        String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        return encryptedPassword;
+    }
 
     public void addUser(User user) {
         String password = user.getPassword();
-        user.setEmail(BCrypt.hashpw(password, BCrypt.gensalt()));
+        user.setPassword(encrypt(password));
         userRepository.save(user);
+    }
+
+    public User findByEmail(String email) {
+        User user = userRepository.findUserByEmail(email);
+        return user;
+    }
+
+    public boolean checkUser(User user, String password) {
+        if (BCrypt.checkpw(password, user.getPassword())) {
+            return true;
+        }
+        return false;
     }
 
 

@@ -43,7 +43,7 @@ public class HomeController {
             return "newuser";
         }
         userService.addUser(user);
-        return "confirmation";
+        return "index";
     }
 
 
@@ -69,15 +69,15 @@ public class HomeController {
     }
 
 
-    @PostMapping("/user/enable/{id}")
-    public String enable(@ModelAttribute User user, @PathVariable long id, @RequestParam String agree, Model model, HttpSession httpSession) {
-        if (agree.equals("yes")) {
-            user.setEnabled(true);
-            httpSession.setAttribute("id", user.getId());
-            return "home";
-        } else {
-            return "index";
-        }
-    }
+//    @PostMapping("/user/enable/{id}")
+//    public String enable(@ModelAttribute User user, @PathVariable long id, @RequestParam String agree, Model model, HttpSession httpSession) {
+//        if (agree.equals("yes")) {
+//            userService.setEnabled(user);
+//            httpSession.setAttribute("id", user.getId());
+//            return "home";
+//        } else {
+//            return "index";
+//        }
+//    }
 
 }

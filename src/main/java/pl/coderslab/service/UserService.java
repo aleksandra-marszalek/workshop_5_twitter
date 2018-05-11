@@ -54,6 +54,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void setEnabled(User user) {
+        Long id = user.getId();
+        userRepository.setEnabled(id);
+    }
+
 
 
 

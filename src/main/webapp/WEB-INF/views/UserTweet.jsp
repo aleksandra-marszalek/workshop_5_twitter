@@ -18,5 +18,6 @@
         </li>
     </c:forEach>
 </ul>
+<a href="/home">Go back to homePage</a>
 </body>
 </html>

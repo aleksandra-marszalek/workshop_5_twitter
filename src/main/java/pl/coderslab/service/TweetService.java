@@ -32,7 +32,12 @@ public class TweetService {
     }
 
     public List<Tweet> findAllByUser(Long id) {
-        List<Tweet> tweets = tweetRepository.findAllByUserId(id);
+        List<Tweet> tweets = tweetRepository.findAllByUserIdSorted(id);
         return tweets;
+    }
+
+    public Tweet findById(Long id) {
+        Tweet tweet = tweetRepository.findOne(id);
+        return tweet;
     }
 }

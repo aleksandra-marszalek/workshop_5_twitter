@@ -46,6 +46,7 @@ Hello, ${userLog.username}!
             <h4>${tweet.user.username}</h4>
             <p><c:out value="${tweet.created}"/></p>
             <p><c:out value="${tweet.text}"/></p>
+            <p><a href="/tweet/${tweet.id}/show">Show tweet</a></p>
         </li>
     </c:forEach>
 </ul>

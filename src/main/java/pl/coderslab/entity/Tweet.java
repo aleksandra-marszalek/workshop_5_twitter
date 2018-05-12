@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Tweet {
@@ -20,7 +21,7 @@ public class Tweet {
 
 
     @NotNull(groups={Default.class, ValidationMessage.class})
-    @Size(max = 160)
+    @Size(max = 140)
     private String text;
 
     private LocalDateTime created;
@@ -28,6 +29,9 @@ public class Tweet {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
+
+    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL)
+    private List<Comment> comment;
 
 
     public Tweet() {

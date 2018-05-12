@@ -26,6 +26,10 @@ public class User {
     @Email
     private String email;
 
+    @OneToMany
+    @JoinColumn(name="user_id")
+    private List<Comment> comments;
+
 
     private boolean enabled;
 

@@ -33,6 +33,11 @@ public class UserService {
         return user;
     }
 
+    public User findById(Long id) {
+        User user = userRepository.findOne(id);
+        return user;
+    }
+
     public boolean checkUser(User user, String password) {
         if (BCrypt.checkpw(password, user.getPassword())) {
             return true;
@@ -59,6 +64,9 @@ public class UserService {
         userRepository.setEnabled(id);
     }
 
+    public boolean checkEnabled (User user) {
+        return (user.isEnabled()) ? true : false;
+    }
 
 
 

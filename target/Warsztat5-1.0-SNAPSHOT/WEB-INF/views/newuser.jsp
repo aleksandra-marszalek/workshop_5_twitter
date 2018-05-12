@@ -24,6 +24,8 @@
 
     <form:hidden path="id" value="${user.id}"/>
 
+    <form:hidden path="enabled" value="${user.enabled}"/>
+
     <input type="submit" value="save"/>
 
 

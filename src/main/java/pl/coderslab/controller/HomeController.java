@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +43,10 @@ public class HomeController {
             model.addAttribute("info", "This email already exists");
             return "newuser";
         }
+        user.setEnabled(false);
         userService.addUser(user);
-        return "index";
+        model.addAttribute("user", user);
+        return "confirmation";
     }
 
 
@@ -57,27 +60,45 @@ public class HomeController {
         try {
             User user = userService.findByEmail(email);
             if (userService.checkUser(user, password)) {
-                httpSession.setAttribute("id", user.getId().toString());
-                return "/home";
+                if (userService.checkEnabled(user)) {
+                    httpSession.setAttribute("id", user.getId().toString());
+                    return "/home";
+                } else {
+
+                    return "redirect:/user/enable/"+user.getId();
+                }
             } else {
                 model.addAttribute("info", "wrong password");
             }
         } catch (Exception e) {
             model.addAttribute("info", "wrong email address");
         }
-        return ("login");
+        return "login";
+    }
+
+    @GetMapping("user/enable/{id}")
+    public String enable(@PathVariable long id, Model model) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "confirmation";
     }
 
 
-//    @PostMapping("/user/enable/{id}")
-//    public String enable(@ModelAttribute User user, @PathVariable long id, @RequestParam String agree, Model model, HttpSession httpSession) {
-//        if (agree.equals("yes")) {
+    @PostMapping("/user/enable/{id}")
+    public String enable(@ModelAttribute User user, @PathVariable long id, @RequestParam String agree, Model model, HttpSession httpSession) {
+        if (agree.equals("yes")) {
 //            userService.setEnabled(user);
-//            httpSession.setAttribute("id", user.getId());
-//            return "home";
-//        } else {
-//            return "index";
-//        }
-//    }
+            user.setEnabled(true);
+//            user.setPassword(user.getPassword());
+//            user.setEmail(user.getEmail());
+//            user.setUsername(user.getUsername());
+//            user.setId(user.getId());
+            userService.save(user);
+            httpSession.setAttribute("id", user.getId());
+            return "home";
+        } else {
+            return "index";
+        }
+    }
 
 }

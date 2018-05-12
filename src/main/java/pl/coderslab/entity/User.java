@@ -2,6 +2,7 @@ package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validationGroups.ValidationMessage;
 import pl.coderslab.validationGroups.ValidationUser;
 
 import javax.persistence.*;

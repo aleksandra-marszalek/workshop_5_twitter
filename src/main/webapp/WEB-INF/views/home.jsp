@@ -20,21 +20,14 @@ Hello, ${userLog.username}!
 <h1>Add new tweet</h1>
 <form:form method="post" modelAttribute="tweet">
 
-    <form:hidden path="user.id" items="${users}" itemValue="${userLog.id}"/>
+
 
     text:
     <form:textarea path="text" placeholder="your tweet text"/>
     <form:errors path="text"/>
 
-    <%--<label>User: </label>--%>
-    <%--<form:select path="user.id"--%>
-                 <%--items="${users}"--%>
-                 <%--itemLabel="username"--%>
-                 <%--itemValue="id"/>--%>
-    <%--<form:errors path="user"/>--%>
 
-
-    <form:hidden path="id" value="${tweet.id}"/>
+    <%--<form:hidden path="user.id" item="user" value="${userLog.id}"/>--%>
 
 
     <input type="submit" value="save"/>

@@ -11,6 +11,8 @@ import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.service.TweetService;
 import pl.coderslab.service.UserService;
+import pl.coderslab.validationGroups.ValidationMessage;
+import pl.coderslab.validationGroups.ValidationUser;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -28,9 +30,6 @@ public class HomeController {
     TweetService tweetService;
 
 
-    @Autowired
-    private Validator jsr303Validator;
-
     @GetMapping("/home")
     public String index (Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("id") == null) {
@@ -45,32 +44,32 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/add")
-    public String addTweet(Model model) {
-        model.addAttribute("tweet", new Tweet());
-        return "TweetForm";
-    }
-
-    @PostMapping("/add")
-    public String addTweet(@Valid @ModelAttribute Tweet tweet, BindingResult result) {
-        if (result.hasErrors()) {
-            return "TweetForm";
-        }
-        tweet.setCreated(LocalDateTime.now());
-        tweetService.save(tweet);
-        return "redirect:/";
-    }
+//    @GetMapping("/add")
+//    public String addTweet(Model model) {
+//        model.addAttribute("tweet", new Tweet());
+//        return "TweetForm";
+//    }
+//
+//    @PostMapping("/add")
+//    public String addTweet(@Valid @ModelAttribute Tweet tweet, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return "TweetForm";
+//        }
+//        tweet.setCreated(LocalDateTime.now());
+//        tweetService.save(tweet);
+//        return "redirect:/";
+//    }
 
     @PostMapping("/home")
-    public String index(@Valid @ModelAttribute Tweet tweet, BindingResult result, HttpSession httpSession) {
-
-
-        if (result.hasErrors()) {
-            return "home";
-        }
-        tweet.setCreated(LocalDateTime.now());
-        tweetService.save(tweet);
+    public String index(@Validated(ValidationMessage.class) @ModelAttribute Tweet tweet, BindingResult result, HttpSession httpSession) {
         Long userId = tweetService.castObjectToLong(httpSession.getAttribute("id"));
+        User user = userService.findById(userId);
+        tweet.setCreated(LocalDateTime.now());
+        tweet.setUser(user);
+        if (result.hasErrors()) {
+            return "redirect:/home";
+        }
+        tweetService.save(tweet);
         return "redirect:/user/"+userId+"/all";
     }
 
@@ -82,6 +81,6 @@ public class HomeController {
     }
 
     @ModelAttribute("alltweets")
-    public  List<Tweet> tweets() {return tweetService.findAll();}
+    public  List<Tweet> tweets() {return tweetService.findAllSorted();}
 
 }

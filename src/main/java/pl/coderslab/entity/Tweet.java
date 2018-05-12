@@ -1,8 +1,13 @@
 package pl.coderslab.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validationGroups.ValidationMessage;
+import pl.coderslab.validationGroups.ValidationUser;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,14 +19,14 @@ public class Tweet {
     private Long id;
 
 
-    @NotNull
+    @NotNull(groups={Default.class, ValidationMessage.class})
     @Size(max = 160)
     private String text;
 
     private LocalDateTime created;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
 

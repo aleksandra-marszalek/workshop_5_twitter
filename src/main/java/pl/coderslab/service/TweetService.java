@@ -22,6 +22,11 @@ public class TweetService {
         return tweets;
     }
 
+    public List<Tweet> findAllSorted() {
+        List<Tweet> tweets = tweetRepository.findAllOrderByCreated();
+        return tweets;
+    }
+
     public void save(Tweet tweet) {
         tweetRepository.save(tweet);
     }

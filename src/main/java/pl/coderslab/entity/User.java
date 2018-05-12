@@ -2,9 +2,11 @@ package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validationGroups.ValidationUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +18,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(groups={Default.class, ValidationUser.class})
     private String username;
 
-    @NotNull
+    @NotNull(groups = ValidationUser.class)
     @Email
     private String email;
 
 
     private boolean enabled;
 
-    @NotNull
+    @NotNull(groups = ValidationUser.class)
     private String password;
+
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Tweet> tweets = new ArrayList<>();
 
     public User() {
     }
@@ -70,5 +76,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
     }
 }

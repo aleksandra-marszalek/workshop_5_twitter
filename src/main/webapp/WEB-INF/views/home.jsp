@@ -1,17 +1,60 @@
 <%--
   Created by IntelliJ IDEA.
   User: janmadej
-  Date: 11.05.2018
-  Time: 21:39
+  Date: 12.05.2018
+  Time: 20:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page isELIgnored="false" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-Hello, ${id}!
 
-</body>
+Hello, ${userLog.username}!
+
+<h1>Add new tweet</h1>
+<form:form method="post" modelAttribute="tweet">
+
+    <form:hidden path="user.id" items="${users}" itemValue="${userLog.id}"/>
+
+    text:
+    <form:textarea path="text" placeholder="your tweet text"/>
+    <form:errors path="text"/>
+
+    <%--<label>User: </label>--%>
+    <%--<form:select path="user.id"--%>
+                 <%--items="${users}"--%>
+                 <%--itemLabel="username"--%>
+                 <%--itemValue="id"/>--%>
+    <%--<form:errors path="user"/>--%>
+
+
+    <form:hidden path="id" value="${tweet.id}"/>
+
+
+    <input type="submit" value="save"/>
+
+
+
+</form:form>
+
+
+<a href="/add">Add</a>
+
+<h1>All tweets</h1>
+<ul>
+    <c:forEach items="${alltweets}" var="tweet">
+        <li>
+            <h4>${tweet.user.username}</h4>
+            <p><c:out value="${tweet.created}"/></p>
+            <p><c:out value="${tweet.text}"/></p>
+        </li>
+    </c:forEach>
+</ul>
+    </body>
 </html>

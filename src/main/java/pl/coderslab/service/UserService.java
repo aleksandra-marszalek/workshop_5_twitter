@@ -10,6 +10,7 @@ import pl.coderslab.entity.User;
 import pl.coderslab.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -66,6 +67,10 @@ public class UserService {
 
     public boolean checkEnabled (User user) {
         return (user.isEnabled()) ? true : false;
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
 

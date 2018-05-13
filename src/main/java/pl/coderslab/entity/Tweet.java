@@ -30,8 +30,8 @@ public class Tweet {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL)
-    private List<Comment> comment;
+    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
 
     public Tweet() {
@@ -67,5 +67,13 @@ public class Tweet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comment) {
+        this.comments = comment;
     }
 }

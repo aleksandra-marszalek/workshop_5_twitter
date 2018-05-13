@@ -44,21 +44,6 @@ public class HomeController {
         }
     }
 
-//    @GetMapping("/add")
-//    public String addTweet(Model model) {
-//        model.addAttribute("tweet", new Tweet());
-//        return "TweetForm";
-//    }
-//
-//    @PostMapping("/add")
-//    public String addTweet(@Valid @ModelAttribute Tweet tweet, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "TweetForm";
-//        }
-//        tweet.setCreated(LocalDateTime.now());
-//        tweetService.save(tweet);
-//        return "redirect:/";
-//    }
 
     @PostMapping("/home")
     public String index(@Validated(ValidationMessage.class) @ModelAttribute Tweet tweet, BindingResult result, HttpSession httpSession) {

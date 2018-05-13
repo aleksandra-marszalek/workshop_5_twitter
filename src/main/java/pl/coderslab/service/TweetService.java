@@ -3,6 +3,7 @@ package pl.coderslab.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderslab.entity.Tweet;
+import pl.coderslab.entity.User;
 import pl.coderslab.repository.TweetRepository;
 
 import java.util.List;
@@ -39,5 +40,9 @@ public class TweetService {
     public Tweet findById(Long id) {
         Tweet tweet = tweetRepository.findOne(id);
         return tweet;
+    }
+
+    public void deleteAllTweets(User user) {
+        tweetRepository.deleteAllByUser(user);
     }
 }

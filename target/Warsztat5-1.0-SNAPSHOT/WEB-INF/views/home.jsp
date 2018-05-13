@@ -17,6 +17,8 @@
 
 Hello, ${userLog.username}!
 
+<a href="/userpanel/${userLog.id}">Go to user panel</a>
+
 <h1>Add new tweet</h1>
 <form:form method="post" modelAttribute="tweet">
 

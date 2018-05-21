@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.entity.Comment;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
+import pl.coderslab.service.CommentService;
 import pl.coderslab.service.TweetService;
 import pl.coderslab.service.UserService;
 import pl.coderslab.validationGroups.ValidationUser;
@@ -26,6 +28,9 @@ public class UserPageController {
 
     @Autowired
     TweetService tweetService;
+
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("/user/{id}/all")
     public String getAll (@PathVariable Long id, HttpSession httpSession, Model model) {

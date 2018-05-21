@@ -34,6 +34,7 @@ public class Tweet {
     private List<Comment> comments;
 
 
+
     public Tweet() {
     }
 
@@ -76,4 +77,5 @@ public class Tweet {
     public void setComments(List<Comment> comment) {
         this.comments = comment;
     }
+
 }

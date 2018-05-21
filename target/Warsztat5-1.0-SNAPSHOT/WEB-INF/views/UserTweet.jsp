@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -15,6 +16,7 @@
             <h4>${tweet.user.username}</h4>
             <p><c:out value="${tweet.created}"/></p>
             <p><c:out value="${tweet.text}"/></p>
+            <p>Comments: <c:out value="${fn:length(tweet.comments)}" /></p>
             <p><a href="/tweet/${tweet.id}/show">Show tweet</a></p>
         </li>
     </c:forEach>

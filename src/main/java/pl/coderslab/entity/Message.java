@@ -1,8 +1,12 @@
 package pl.coderslab.entity;
 
+import pl.coderslab.validationGroups.ValidationMessage;
+import pl.coderslab.validationGroups.ValidationMessagePrivate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,8 +24,10 @@ public class Message {
 
     private LocalDateTime created;
 
+    @NotNull(groups={Default.class, ValidationMessagePrivate.class})
     private String text;
 
+    @NotNull(groups={Default.class, ValidationMessagePrivate.class})
     private String title;
 
     private boolean isRead;

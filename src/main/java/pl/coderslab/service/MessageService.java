@@ -17,4 +17,8 @@ public class MessageService {
     public List<Message> findAllBySender (User sender) { return messageRepository.findAllBySender(sender);}
 
     public List<Message> findAllByReceiver (User receiver) { return messageRepository.findAllByReceiver(receiver);}
+
+    public void sendMessage (Message message) {
+        messageRepository.save(message);
+    }
 }

@@ -8,15 +8,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.Comment;
+import pl.coderslab.entity.Message;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.service.CommentService;
+import pl.coderslab.service.MessageService;
 import pl.coderslab.service.TweetService;
 import pl.coderslab.service.UserService;
+import pl.coderslab.validationGroups.ValidationMessage;
+import pl.coderslab.validationGroups.ValidationMessagePrivate;
 import pl.coderslab.validationGroups.ValidationUser;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -31,6 +37,9 @@ public class UserPageController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/user/{id}/all")
     public String getAll (@PathVariable Long id, HttpSession httpSession, Model model) {
@@ -147,6 +156,46 @@ public class UserPageController {
             }
         }
         return "redirect:/userpanel/"+id;
+    }
+
+    @GetMapping("/user/{id}/showMessages")
+    public String showAllMsg (@PathVariable Long id, HttpSession httpSession, Model model) {
+        if (httpSession.getAttribute("id") == null) {
+            return "index";
+        } else {
+            User receiver = userService.findById(id);
+            List<Message> messages = messageService.findAllByReceiver(receiver);
+            model.addAttribute("messages", messages);
+            return "UserMessage";
+        }
+    }
+
+    @GetMapping("/user/{id}/sendMessage")
+    public String sendMessage(Model model, @PathVariable long id, HttpSession httpSession) {
+        if (httpSession.getAttribute("id") == null) {
+            return "redirect:/index";
+        } else if (tweetService.castObjectToLong(httpSession.getAttribute("id")) == id) {
+            return "redirect:/home";
+        } else {
+            User sender = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
+            User receiver = userService.findById(id);
+            Message message = new Message();
+            message.setSender(sender);
+            message.setReceiver(receiver);
+            model.addAttribute("message", message);
+            return "MessageForm";
+        }
+    }
+
+    @PostMapping("/user/{id}/sendMessage")
+    public String sendMessage(@Validated (ValidationMessagePrivate.class) @ModelAttribute Message message, BindingResult result) {
+        if (result.hasErrors()) {
+            return "MessageForm";
+        }
+        message.setRead(false);
+        message.setCreated(LocalDateTime.now());
+        messageService.sendMessage(message);
+        return "redirect:/home";
     }
 
 }

@@ -19,6 +19,8 @@ Hello, ${userLog.username}!
 
 <a href="/userpanel/${userLog.id}">Go to user panel</a>
 
+<a href="/allUsers">Go to all users</a>
+
 <h1>Add new tweet</h1>
 <form:form method="post" modelAttribute="tweet">
 
@@ -53,6 +55,6 @@ Hello, ${userLog.username}!
     </c:forEach>
 </ul>
 
-<a href="/allUsers">Go back to all users</a>
+
     </body>
 </html>

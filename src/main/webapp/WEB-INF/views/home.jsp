@@ -21,6 +21,8 @@ Hello, ${userLog.username}!
 
 <a href="/allUsers">Go to all users</a>
 
+<a href="/user/${userLog.id}/myMessages">Go to my messages</a>
+
 <h1>Add new tweet</h1>
 <form:form method="post" modelAttribute="tweet">
 

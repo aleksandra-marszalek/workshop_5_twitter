@@ -158,44 +158,18 @@ public class UserPageController {
         return "redirect:/userpanel/"+id;
     }
 
-    @GetMapping("/user/{id}/showMessages")
-    public String showAllMsg (@PathVariable Long id, HttpSession httpSession, Model model) {
-        if (httpSession.getAttribute("id") == null) {
-            return "index";
-        } else {
-            User receiver = userService.findById(id);
-            List<Message> messages = messageService.findAllByReceiver(receiver);
-            model.addAttribute("messages", messages);
-            return "UserMessage";
-        }
-    }
+//    @GetMapping("/user/{id}/showMessages")
+//    public String showAllMsg (@PathVariable Long id, HttpSession httpSession, Model model) {
+//        if (httpSession.getAttribute("id") == null) {
+//            return "index";
+//        } else {
+//            User receiver = userService.findById(id);
+//            List<Message> messages = messageService.findAllByReceiver(receiver);
+//            model.addAttribute("messages", messages);
+//            return "UserMessage";
+//        }
+//    }
 
-    @GetMapping("/user/{id}/sendMessage")
-    public String sendMessage(Model model, @PathVariable long id, HttpSession httpSession) {
-        if (httpSession.getAttribute("id") == null) {
-            return "redirect:/index";
-        } else if (tweetService.castObjectToLong(httpSession.getAttribute("id")) == id) {
-            return "redirect:/home";
-        } else {
-            User sender = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
-            User receiver = userService.findById(id);
-            Message message = new Message();
-            message.setSender(sender);
-            message.setReceiver(receiver);
-            model.addAttribute("message", message);
-            return "MessageForm";
-        }
-    }
 
-    @PostMapping("/user/{id}/sendMessage")
-    public String sendMessage(@Validated (ValidationMessagePrivate.class) @ModelAttribute Message message, BindingResult result) {
-        if (result.hasErrors()) {
-            return "MessageForm";
-        }
-        message.setRead(false);
-        message.setCreated(LocalDateTime.now());
-        messageService.sendMessage(message);
-        return "redirect:/home";
-    }
 
 }

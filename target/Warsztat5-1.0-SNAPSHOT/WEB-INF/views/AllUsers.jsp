@@ -13,6 +13,7 @@
         <li>
             <h4>${user.username}</h4>
             <p><a href="/user/${user.id}/all">Show user's tweets</a></p>
+            <p><a href="/user/${user.id}/sendMessage">Send a message</a></p>
         </li>
     </c:forEach>
 </ul>

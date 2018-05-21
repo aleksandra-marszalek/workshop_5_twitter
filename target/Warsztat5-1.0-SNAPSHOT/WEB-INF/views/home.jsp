@@ -52,5 +52,7 @@ Hello, ${userLog.username}!
         </li>
     </c:forEach>
 </ul>
+
+<a href="/allUsers">Go back to all users</a>
     </body>
 </html>

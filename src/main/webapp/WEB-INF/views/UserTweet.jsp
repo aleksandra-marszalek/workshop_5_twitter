@@ -8,16 +8,17 @@
 </head>
 <body>
 
-<h1>All tweets</h1>
+<h1>All user's tweets</h1>
 <ul>
     <c:forEach items="${usertweets}" var="tweet">
         <li>
             <h4>${tweet.user.username}</h4>
             <p><c:out value="${tweet.created}"/></p>
             <p><c:out value="${tweet.text}"/></p>
+            <p><a href="/tweet/${tweet.id}/show">Show tweet</a></p>
         </li>
     </c:forEach>
 </ul>
-<a href="/home">Go back to homePage</a>
+<a href="/home">Go back to homepage</a>
 </body>
 </html>

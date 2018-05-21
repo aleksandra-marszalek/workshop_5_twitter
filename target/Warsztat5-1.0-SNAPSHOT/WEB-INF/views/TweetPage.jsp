@@ -44,6 +44,6 @@
         </li>
     </c:forEach>
 </ul>
-<a href="/home">Go back to homePage</a>
+<a href="/home">Go back to homepage</a>
 </body>
 </html>

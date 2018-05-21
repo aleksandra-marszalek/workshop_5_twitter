@@ -38,6 +38,18 @@ public class UserPageController {
         }
     }
 
+    @GetMapping("/allUsers")
+    public String allUsers (HttpSession httpSession, Model model) {
+        if (httpSession.getAttribute("id")==null) {
+            return "redirect:/index";
+        } else {
+            List<User> allUsers = userService.findAll();
+            model.addAttribute("users", allUsers);
+            return "AllUsers";
+        }
+    }
+
+
     @GetMapping("/userpanel/{id}")
     public String welcomePanel (@PathVariable Long id, HttpSession httpSession, Model model) {
         if (httpSession.getAttribute("id")==null) {
@@ -93,13 +105,13 @@ public class UserPageController {
     public String delete(@ModelAttribute User user, @PathVariable long id,
                          @RequestParam String agree, Model model, HttpSession httpSession) {
         if (agree.equals("yes")) {
-            //try {
+            try {
                 userService.deleteUserById(id);
                 httpSession.setAttribute("id", null);
-//            } catch (Exception e){
-//                model.addAttribute("error", "user");
-//                return "Error";
-//            }
+            } catch (Exception e){
+                model.addAttribute("error", "user");
+                return "Error";
+            }
         }
         return "redirect:/home";
     }

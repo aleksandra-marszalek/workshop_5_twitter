@@ -15,5 +15,7 @@
 <a href="/user/edit/${id}">Change username</a>
 <a href="/user/deleteTweets/${id}">Delete tweets</a>
 <a href="/user/delete/${id}">Delete user</a>
+
+<a href="/home">Go back to homepage</a>
 </body>
 </html>

@@ -13,5 +13,6 @@
     <input type="submit" value="save">
 </form>
 
+<a href="/home">Go back to homepage</a>
 </body>
 </html>

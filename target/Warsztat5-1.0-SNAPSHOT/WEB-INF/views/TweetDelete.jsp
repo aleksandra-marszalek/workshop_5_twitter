@@ -6,12 +6,13 @@
 </head>
 <body>
 <h1>Delete</h1>
-<p>Are you sure you want to delete the user?</p>
+<p>Are you sure you want to delete the user's tweets?</p>
 <form method="post" action="/user/deleteTweets/${user.id}">
     yes: <input type="radio" name="agree" value="yes">
     no: <input type="radio" name="agree" value="no">
     <input type="submit" value="save">
 </form>
 
+<a href="/home">Go back to homepage</a>
 </body>
 </html>

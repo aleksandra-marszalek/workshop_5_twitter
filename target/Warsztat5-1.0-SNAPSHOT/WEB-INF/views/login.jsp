@@ -17,7 +17,7 @@
         password:
         <input type="text" name="password">
     </label>
-    <input type="submit" value="submit">
+    <input type="submit" value="log in">
 </form>
 
 <h1> I am new user </h1>

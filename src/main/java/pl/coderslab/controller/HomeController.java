@@ -35,7 +35,6 @@ public class HomeController {
         if (httpSession.getAttribute("id") == null) {
             return "index";
         } else {
-
             model.addAttribute("tweet", new Tweet());
             Long userId = tweetService.castObjectToLong(httpSession.getAttribute("id"));
             User userLogged = userService.findById(userId);

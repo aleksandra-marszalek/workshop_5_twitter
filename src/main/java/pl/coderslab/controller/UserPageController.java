@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -70,7 +71,7 @@ public class UserPageController {
         }
         userService.addUser(user);
         model.addAttribute("user", user);
-        return "redirect:/userPanel/"+id;
+        return "redirect:/userpanel/"+id;
     }
 
 
@@ -87,17 +88,18 @@ public class UserPageController {
         }
     }
 
+    @Transactional
     @PostMapping("/user/delete/{id}")
     public String delete(@ModelAttribute User user, @PathVariable long id,
                          @RequestParam String agree, Model model, HttpSession httpSession) {
         if (agree.equals("yes")) {
-            try {
-                userService.deleteUser(user);
+            //try {
+                userService.deleteUserById(id);
                 httpSession.setAttribute("id", null);
-            } catch (Exception e){
-                model.addAttribute("error", "user");
-                return "Error";
-            }
+//            } catch (Exception e){
+//                model.addAttribute("error", "user");
+//                return "Error";
+//            }
         }
         return "redirect:/home";
     }
@@ -115,6 +117,7 @@ public class UserPageController {
         }
     }
 
+    @Transactional
     @PostMapping("/user/deleteTweets/{id}")
     public String deleteTweets(@ModelAttribute User user, @PathVariable long id,
                          @RequestParam String agree, Model model, HttpSession httpSession) {
@@ -128,4 +131,5 @@ public class UserPageController {
         }
         return "redirect:/userpanel/"+id;
     }
+
 }

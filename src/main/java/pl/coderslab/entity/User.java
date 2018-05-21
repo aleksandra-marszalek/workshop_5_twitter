@@ -37,7 +37,7 @@ public class User {
     private String password;
 
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", fetch = FetchType.EAGER)
     private List<Tweet> tweets = new ArrayList<>();
 
     public User() {

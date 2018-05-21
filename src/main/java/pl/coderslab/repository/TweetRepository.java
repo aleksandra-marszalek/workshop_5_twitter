@@ -20,4 +20,5 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findAllOrderByCreated();
 
     void deleteAllByUser (User user);
+
 }

@@ -12,6 +12,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value="UPDATE User SET enabled = true WHERE id=:id", nativeQuery = true)
     User setEnabled(@Param("id") Long id);
 
+    void deleteUserById (Long id);
+
 
 
 

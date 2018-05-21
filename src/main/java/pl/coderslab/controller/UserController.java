@@ -56,7 +56,6 @@ public class UserController {
                     httpSession.setAttribute("id", user.getId().toString());
                     return "redirect:/home";
                 } else {
-
                     return "redirect:/user/enable/"+user.getId();
                 }
             } else {

@@ -11,8 +11,16 @@
     New Username: <form:input path="username" placeholder="username"/>
     <form:errors path="username"/>
 
+    Email: <form:input path="email"/>
+    <form:errors path="email"/>
+
+
+    Password: <form:input path="password"/>
+    <form:errors path="password"/>
 
     <form:hidden path="id" value="${user.id}"/>
+
+    <form:hidden path="enabled" value="${user.enabled}"/>
 
     <input type="submit" value="save"/>
 

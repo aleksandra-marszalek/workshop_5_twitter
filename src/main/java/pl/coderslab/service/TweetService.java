@@ -6,6 +6,7 @@ import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.TweetRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -29,7 +30,7 @@ public class TweetService {
     }
 
     public void save(Tweet tweet) {
-        tweetRepository.save(tweet);
+        tweetRepository.saveAndFlush(tweet);
     }
 
     public List<Tweet> findAllByUser(Long id) {

@@ -18,6 +18,7 @@ import pl.coderslab.validationGroups.ValidationMessagePrivate;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -76,5 +77,32 @@ public class MessageController {
         messageService.sendMessage(message);
         return "redirect:/home";
     }
+
+    @GetMapping("/newMessage")
+    public String newMessage(Model model, HttpSession httpSession) {
+        if (httpSession.getAttribute("id") == null) {
+            return "redirect:/index";
+        } else {
+            User sender = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
+            Message message = new Message();
+            message.setSender(sender);
+            model.addAttribute("message", message);
+            model.addAttribute("receivers", findReceivers(sender));
+        }
+        return "NewMessage";
+    }
+
+
+    public List<User> findReceivers(User currentUser) {
+        List<User> receivers = userService.findAll();
+        List<User> receiversExceptCurrentUser = new ArrayList<>();
+        for (User receiver: receivers) {
+            if (!receiver.equals(currentUser)) {
+                receiversExceptCurrentUser.add(receiver);
+            }
+        }
+        return receiversExceptCurrentUser;
+    }
+
 
 }

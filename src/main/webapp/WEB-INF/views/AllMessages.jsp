@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<p><a href="/newMessage">Send new message</a></p>
+
 <h1>All messages received</h1>
 <ul>
     <c:forEach items="${messagesReceived}" var="message">

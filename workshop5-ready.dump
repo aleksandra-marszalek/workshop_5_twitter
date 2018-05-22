@@ -1,0 +1,146 @@
+-- MySQL dump 10.13  Distrib 5.7.21, for osx10.12 (x86_64)
+--
+-- Host: localhost    Database: workshop5
+-- ------------------------------------------------------
+-- Server version	5.7.21
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Comment`
+--
+
+DROP TABLE IF EXISTS `Comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Comment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  `text` varchar(60) NOT NULL,
+  `tweet_id` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKcc5n08r8pndrkekxtc05q69e4` (`tweet_id`),
+  KEY `FKhlbnnmiua9xpvfq8y1u1a15ie` (`user_id`),
+  CONSTRAINT `FKcc5n08r8pndrkekxtc05q69e4` FOREIGN KEY (`tweet_id`) REFERENCES `Tweet` (`id`),
+  CONSTRAINT `FKhlbnnmiua9xpvfq8y1u1a15ie` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Comment`
+--
+
+LOCK TABLES `Comment` WRITE;
+/*!40000 ALTER TABLE `Comment` DISABLE KEYS */;
+INSERT INTO `Comment` VALUES (1,'2018-05-22 11:56:48','finally, those older version was such a crap!',1,2),(2,'2018-05-22 02:18:16','very interesting content',4,3),(3,'2018-05-22 11:56:11','nice profile though, keep up the good work!',3,2),(4,'2018-05-22 12:02:53','hi Jan, welcome to the world of opportunity',7,6),(5,'2018-05-22 12:45:42','hahahah, you\'re funny',7,2);
+/*!40000 ALTER TABLE `Comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Message`
+--
+
+DROP TABLE IF EXISTS `Message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Message` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  `readed` int(11) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `receiver_id` bigint(20) DEFAULT NULL,
+  `sender_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK2hnqtmi68j7g8y1bwhxq4apd5` (`receiver_id`),
+  KEY `FKcrnfc5k5lxdfurq3b97o52dnv` (`sender_id`),
+  CONSTRAINT `FK2hnqtmi68j7g8y1bwhxq4apd5` FOREIGN KEY (`receiver_id`) REFERENCES `User` (`id`),
+  CONSTRAINT `FKcrnfc5k5lxdfurq3b97o52dnv` FOREIGN KEY (`sender_id`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Message`
+--
+
+LOCK TABLES `Message` WRITE;
+/*!40000 ALTER TABLE `Message` DISABLE KEYS */;
+INSERT INTO `Message` VALUES (1,'2018-05-22 14:03:24',0,'wiadomosc','tytul',1,6),(2,'2018-05-22 16:02:04',1,'this is cool','new msg',2,8),(3,'2018-05-22 02:16:57',1,'hello hi hello hi hello hi hello hi hello hi hello hi','hi',4,3),(4,'2018-05-22 02:17:54',1,'hi there','new message',2,3),(5,'2018-05-22 02:27:18',0,'helloo - i was wondering how are you doing? is it great? is the sun shining in your city, too? Cheers!','hi aleksandra',2,1),(6,'2018-05-22 13:20:54',0,'hi Jan, what are you doing?','hi there',3,1),(7,'2018-05-22 13:21:26',1,'this is me','hello',6,1),(8,'2018-05-22 13:47:13',0,'what\'s up?','hi aleksandra',2,6),(9,'2018-05-22 14:12:29',0,'anna, it is Jack, I have a special message for you! CONTACT ME ASAP','VERY IMPORTANT MESSAGE',5,NULL),(10,'2018-05-22 14:14:13',0,'hi, i think youre funny','funny',3,6),(11,'2018-05-22 16:01:45',0,'lalala','lala',4,8),(12,'2018-05-22 16:16:51',0,'hi kot','last message',4,2);
+/*!40000 ALTER TABLE `Message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Tweet`
+--
+
+DROP TABLE IF EXISTS `Tweet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Tweet` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  `text` varchar(140) NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKtjo83phj1ffkewrkbxqmfvw36` (`user_id`),
+  CONSTRAINT `FKtjo83phj1ffkewrkbxqmfvw36` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Tweet`
+--
+
+LOCK TABLES `Tweet` WRITE;
+/*!40000 ALTER TABLE `Tweet` DISABLE KEYS */;
+INSERT INTO `Tweet` VALUES (1,'2018-05-22 01:51:27','brand new tweeter, brand new tweet',1),(2,'2018-05-22 01:51:50','another sweet tweet',1),(3,'2018-05-22 01:52:43','this is a serious profile at tweeter, enjoy!',2),(4,'2018-05-22 02:00:40','my new catty tweet',4),(5,'2018-05-22 11:21:16','first tweet at bootstrap!',1),(6,'2018-05-22 11:27:01','I\'m getting to like Bootstrap!',1),(7,'2018-05-22 11:39:25','hi, I am Jan and I am new to the  world of twitter. Come follow me!',3);
+/*!40000 ALTER TABLE `Tweet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `User`
+--
+
+DROP TABLE IF EXISTS `User`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `User` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `enabled` bit(1) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `User`
+--
+
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,'aaa@aa.pl','','$2a$10$K7/eaoKBHNmQ77oubWa7auuuKk30iK08yJzDBq4dlJO3zjFMNb5Z.','aaa'),(2,'aaleksandra.mmarszalek@gmail.com','','$2a$10$UfoirdCY0Snen8l5y3EUW.5Ug4ufssLl/cZTcbeuu7EImJW3E7Y82','aleksandra-marszalek'),(3,'janmadej@madej.com','','$2a$10$UAbMB3NShDRxeEz8heJaNOQIMxGo/3gV8JzEvSwqXpDtlVmstd3bO','jan madej'),(4,'kot123@kot.pl','','$2a$10$xMn7G3Z5KJeXd3fO38W4oO.iL1MeX0oMBVySLRYRWVQ625tNCCb/q','kot123'),(5,'anna123@anna123.pl','','$2a$10$WeQubuNwYfZ6qUxK0mWcBu2JI5miYO663oj2cVLERgyplDrj4A5Im','anna123'),(6,'jack.sparrow@gmail.com','','$2a$10$pYzjmjAs8Qhioe84FVDIee3GkgkQs1Yf2RVHtiyExh6YLok72Vox.','jack.sparrow'),(8,'la@la.la','','$2a$10$6q98M2.thW/Nt6RBmCQR2em7lPP4Sa3IAHlNJe2vUJBn/tDOqL8k2','lalalala');
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-05-22 16:19:28

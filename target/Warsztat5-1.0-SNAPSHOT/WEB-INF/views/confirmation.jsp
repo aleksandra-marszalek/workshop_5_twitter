@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Delete</h1>
+<h1>Confirm</h1>
 <p>Do you want to create the account for ${user.username} ?</p>
 <form method="post" action="/user/enable/${user.id}">
     yes, I want to create the account: <input type="checkbox" name="agree" value="yes">

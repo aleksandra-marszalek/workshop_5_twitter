@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="base/Header.jsp"%>
+<%@ include file="../base/Header.jsp"%>
 
 
 
@@ -31,4 +31,4 @@
     </div>
 </div>
 
-<%@include file="base/Footer.jsp"%>
+<%@include file="../base/Footer.jsp"%>

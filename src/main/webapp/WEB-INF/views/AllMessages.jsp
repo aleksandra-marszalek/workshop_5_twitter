@@ -4,9 +4,6 @@
 <%@ include file="base/Header.jsp"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div>
-
-</div>
 <div class="card mb-3">
     <div class="card-header">
         <h1>Send new message</h1></div>

@@ -76,6 +76,7 @@ public class UserPageController {
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id"))!=id) {
             return "redirect:/home";
         } else {
+            tweetService.userLog(httpSession, model);
             model.addAttribute("id", id);
             return "userPanel";
         }
@@ -88,6 +89,7 @@ public class UserPageController {
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id"))!=id) {
             return "redirect:/home";
         } else {
+            tweetService.userLog(httpSession, model);
             User user = userService.findById(id);
             model.addAttribute("user", user);
             return "UserEdit";
@@ -113,6 +115,7 @@ public class UserPageController {
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id"))!=id) {
             return "redirect:/home";
         } else {
+            tweetService.userLog(httpSession, model);
             User user = userService.findById(id);
             model.addAttribute("user", user);
             return "UserDelete";
@@ -142,6 +145,7 @@ public class UserPageController {
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id")) != id) {
             return "redirect:/home";
         } else {
+            tweetService.userLog(httpSession, model);
             User user = userService.findById(id);
             model.addAttribute("user", user);
             return "TweetDelete";
@@ -163,17 +167,6 @@ public class UserPageController {
         return "redirect:/userpanel/"+id;
     }
 
-//    @GetMapping("/user/{id}/showMessages")
-//    public String showAllMsg (@PathVariable Long id, HttpSession httpSession, Model model) {
-//        if (httpSession.getAttribute("id") == null) {
-//            return "index";
-//        } else {
-//            User receiver = userService.findById(id);
-//            List<Message> messages = messageService.findAllByReceiver(receiver);
-//            model.addAttribute("messages", messages);
-//            return "UserMessage";
-//        }
-//    }
 
 
 

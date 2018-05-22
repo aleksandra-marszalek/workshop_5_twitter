@@ -24,22 +24,6 @@
         <div class="card-header">Register an Account</div>
         <div class="card-body">
 
-
-                Username:
-
-
-                Email:
-
-
-                Password:
-
-
-
-
-
-
-
-
             <form:form method="post" modelAttribute="user">
                 <p>${info}</p>
                 <div class="form-group">

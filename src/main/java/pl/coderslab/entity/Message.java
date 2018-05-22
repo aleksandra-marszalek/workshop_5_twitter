@@ -4,6 +4,8 @@ import pl.coderslab.validationGroups.ValidationMessage;
 import pl.coderslab.validationGroups.ValidationMessagePrivate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
@@ -16,10 +18,15 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
+    @Min(0)
+    @Max(1)
+    private int readed;
+
+    @ManyToOne
     private User sender;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private User receiver;
 
     private LocalDateTime created;
@@ -30,7 +37,6 @@ public class Message {
     @NotNull(groups={Default.class, ValidationMessagePrivate.class})
     private String title;
 
-    private boolean isRead;
 
     public Message() {
     }
@@ -83,11 +89,11 @@ public class Message {
         this.title = title;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public int getReaded() {
+        return readed;
     }
 
-    public void setRead(boolean read) {
-        isRead = read;
+    public void setReaded(int readed) {
+        this.readed = readed;
     }
 }

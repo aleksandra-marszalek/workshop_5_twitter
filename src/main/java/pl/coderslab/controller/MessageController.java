@@ -51,13 +51,13 @@ public class MessageController {
     }
 
     @GetMapping("/user/{id}/sendMessage")
-    public String sendMessage(Model model, @PathVariable long id, HttpSession httpSession) {
+    public String sendMessage(Model model, @PathVariable Long id, HttpSession httpSession) {
         if (httpSession.getAttribute("id") == null) {
             return "redirect:/index";
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id")) == id) {
             return "redirect:/home";
         } else {
-            User sender = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
+            User sender = userService.findById(Long.parseLong((String)httpSession.getAttribute("id")));
             User receiver = userService.findById(id);
             Message message = new Message();
             message.setSender(sender);
@@ -72,7 +72,7 @@ public class MessageController {
         if (result.hasErrors()) {
             return "MessageForm";
         }
-        message.setRead(false);
+        message.setReaded(0);
         message.setCreated(LocalDateTime.now());
         messageService.sendMessage(message);
         return "redirect:/home";
@@ -92,17 +92,55 @@ public class MessageController {
         return "NewMessage";
     }
 
+    @PostMapping("/newMessage")
+    public String newMessage(@Validated(ValidationMessagePrivate.class) @ModelAttribute Message message, BindingResult result) {
+        if (result.hasErrors()) {
+            return "NewMessage";
+        }
+        message.setReaded(0);
+        message.setCreated(LocalDateTime.now());
+        messageService.sendMessage(message);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/message/{id}/show")
+    public String showMessage(Model model, HttpSession httpSession, @PathVariable Long id) {
+        if (httpSession.getAttribute("id") == null) {
+            return "redirect:/index";
+        }
+        User currentUser = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
+        Message message = messageService.findById(id);
+        User sender = message.getSender();
+        User receiver = message.getReceiver();
+        model.addAttribute("message", message);
+        if (message.getSender().getId()==(currentUser.getId())) {
+            return "OneMessage";
+        } else if (message.getReceiver().getId()==(currentUser.getId())) {
+            message.setReaded(1);
+            return "OneMessage";
+        } else {
+            return "redirect:/home";
+        }
+    }
+
 
     public List<User> findReceivers(User currentUser) {
         List<User> receivers = userService.findAll();
-        List<User> receiversExceptCurrentUser = new ArrayList<>();
-        for (User receiver: receivers) {
-            if (!receiver.equals(currentUser)) {
-                receiversExceptCurrentUser.add(receiver);
-            }
-        }
-        return receiversExceptCurrentUser;
+        receivers.remove(currentUser);
+        return receivers;
+//        List<User> receiversExceptCurrentUser = new ArrayList<>();
+//        for (User receiver: receivers) {
+//            if (!receiver.equals(currentUser)) {
+//                receiversExceptCurrentUser.add(receiver);
+//            }
+//            else {
+//                receiversExceptCurrentUser.remove(currentUser);
+//            }
+//        }
+//        return receiversExceptCurrentUser;
     }
+
+
 
 
 }

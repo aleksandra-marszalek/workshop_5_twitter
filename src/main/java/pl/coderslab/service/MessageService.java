@@ -21,4 +21,8 @@ public class MessageService {
     public void sendMessage (Message message) {
         messageRepository.save(message);
     }
+
+    public Message findById (Long id) {
+        return messageRepository.findOne(id);
+    }
 }

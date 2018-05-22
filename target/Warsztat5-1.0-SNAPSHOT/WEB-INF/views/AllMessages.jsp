@@ -48,7 +48,7 @@
                         <tr>
                             <td>${message.title}</td>
                             <td>
-                                <c:out value="${message.created}}"/>
+                                <c:out value="${message.created}"/>
                             </td>
                             <td><c:out value="${message.sender.username}"/></td>
                             <td>
@@ -97,7 +97,7 @@
                     <tr>
                         <td>${message.title}</td>
                         <td>
-                            <c:out value="${message.created}}"/>
+                            <c:out value="${message.created}"/>
                         </td>
                         <td><c:out value="${message.receiver.username}"/></td>
                         <td>

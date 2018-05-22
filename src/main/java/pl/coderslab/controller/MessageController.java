@@ -41,6 +41,7 @@ public class MessageController {
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id"))!=id) {
             return "redirect:/home";
         } else {
+            tweetService.userLog(httpSession, model);
             User user = userService.findById(id);
             List<Message> messagesReceived = messageService.findAllByReceiver(user);
             List<Message> messagesSent = messageService.findAllBySender(user);
@@ -57,6 +58,7 @@ public class MessageController {
         } else if (tweetService.castObjectToLong(httpSession.getAttribute("id")) == id) {
             return "redirect:/home";
         } else {
+            tweetService.userLog(httpSession, model);
             User sender = userService.findById(Long.parseLong((String)httpSession.getAttribute("id")));
             User receiver = userService.findById(id);
             Message message = new Message();
@@ -68,14 +70,17 @@ public class MessageController {
     }
 
     @PostMapping("/user/{id}/sendMessage")
-    public String sendMessage(@Validated(ValidationMessagePrivate.class) @ModelAttribute Message message, BindingResult result) {
+    public String sendMessage(@Validated(ValidationMessagePrivate.class) @ModelAttribute Message message,
+                              BindingResult result, HttpSession httpSession) {
         if (result.hasErrors()) {
             return "MessageForm";
         }
+        User currentUser = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
+        Long id = currentUser.getId();
         message.setReaded(0);
         message.setCreated(LocalDateTime.now());
         messageService.sendMessage(message);
-        return "redirect:/home";
+        return "redirect:/user/"+id+"/myMessages";
     }
 
     @GetMapping("/newMessage")
@@ -83,6 +88,7 @@ public class MessageController {
         if (httpSession.getAttribute("id") == null) {
             return "redirect:/index";
         } else {
+            tweetService.userLog(httpSession, model);
             User sender = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
             Message message = new Message();
             message.setSender(sender);
@@ -93,14 +99,16 @@ public class MessageController {
     }
 
     @PostMapping("/newMessage")
-    public String newMessage(@Validated(ValidationMessagePrivate.class) @ModelAttribute Message message, BindingResult result) {
+    public String newMessage(@Validated(ValidationMessagePrivate.class) @ModelAttribute Message message, BindingResult result, HttpSession httpSession) {
         if (result.hasErrors()) {
             return "NewMessage";
         }
+        User currentUser = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
+        Long id = currentUser.getId();
         message.setReaded(0);
         message.setCreated(LocalDateTime.now());
         messageService.sendMessage(message);
-        return "redirect:/home";
+        return "redirect:/user/"+id+"/myMessages";
     }
 
     @GetMapping("/message/{id}/show")
@@ -108,6 +116,7 @@ public class MessageController {
         if (httpSession.getAttribute("id") == null) {
             return "redirect:/index";
         }
+        tweetService.userLog(httpSession, model);
         User currentUser = userService.findById(Long.parseLong((String) httpSession.getAttribute("id")));
         Message message = messageService.findById(id);
         User sender = message.getSender();

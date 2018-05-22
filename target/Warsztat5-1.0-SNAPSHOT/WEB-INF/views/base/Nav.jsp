@@ -135,8 +135,9 @@
                     <%--</div>--%>
                 <%--</form>--%>
             <%--</li>--%>
+
             <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="redirect:/login">
+                <a class="btn btn-outline-secondary" href="/logout" role="button">
                     <i class="fa fa-fw fa-sign-out"></i>Logout</a>
             </li>
         </ul>

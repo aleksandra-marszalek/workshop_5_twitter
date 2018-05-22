@@ -20,8 +20,8 @@
             <p><c:out value="${message.created}"/></p>
             <p><c:out value="${message.sender.username}"/></p>
             <p>Text:
-                <c:if test="${message.readed==1}"><c:out value="${fn:substring(message.text, 0, 30)}" /></c:if>
-                <c:if test="${message.readed==0}"><b><c:out value="${fn:substring(message.text, 0, 30)}" /></b></c:if>
+                <c:if test="${message.readed=='1'}"><c:out value="${fn:substring(message.text, 0, 30)}" /></c:if>
+                <c:if test="${message.readed=='0'}"><b><c:out value="${fn:substring(message.text, 0, 30)}" /></b></c:if>
 
             </p>
 

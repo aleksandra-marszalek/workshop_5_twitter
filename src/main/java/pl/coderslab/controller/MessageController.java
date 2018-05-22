@@ -113,10 +113,11 @@ public class MessageController {
         User sender = message.getSender();
         User receiver = message.getReceiver();
         model.addAttribute("message", message);
-        if (message.getSender().getId()==(currentUser.getId())) {
+        if (sender.getId()==(currentUser.getId())) {
             return "OneMessage";
-        } else if (message.getReceiver().getId()==(currentUser.getId())) {
+        } else if (receiver.getId()==(currentUser.getId())) {
             message.setReaded(1);
+            messageService.sendMessage(message);
             return "OneMessage";
         } else {
             return "redirect:/home";

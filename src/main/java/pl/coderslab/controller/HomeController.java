@@ -29,6 +29,11 @@ public class HomeController {
     @Autowired
     TweetService tweetService;
 
+    @GetMapping("/")
+    public String home () {
+        return "Main";
+    }
+
 
     @GetMapping("/home")
     public String index (Model model, HttpSession httpSession) {

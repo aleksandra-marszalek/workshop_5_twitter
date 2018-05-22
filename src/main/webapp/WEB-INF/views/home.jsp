@@ -4,24 +4,37 @@
 <%@page isELIgnored="false" %>
 <%@ include file="base/Header.jsp"%>
 
-<h1>Add new tweet</h1>
-<div>
 
-    <form:form method="post" modelAttribute="tweet">
-        <p>${info}</p>
-        <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                    <label for="exampleInputName">text: </label>
-                    <form:textarea path="text" placeholder="your tweet text" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp"/>
-                    <form:errors path="text"/>
-                </div>
-            </div>
+<div class="card mb-3">
+    <div class="card-header">
+        <h1>Add new tweet</h1>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+
+                <tbody>
+
+
+                    <form:form method="post" modelAttribute="tweet">
+                        <p>${info}</p>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="exampleInputName">text: </label>
+                                    <form:textarea path="text" placeholder="your tweet text" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp"/>
+                                    <form:errors path="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="submit" value="save"/>
+                        </div>
+                    </form:form>
+                </tbody>
+            </table>
         </div>
-        <div>
-            <input type="submit" value="save"/>
-        </div>
-    </form:form>
+    </div>
 </div>
 
 

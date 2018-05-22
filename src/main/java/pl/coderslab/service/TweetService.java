@@ -2,10 +2,12 @@ package pl.coderslab.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.TweetRepository;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -14,6 +16,16 @@ public class TweetService {
 
     @Autowired
     TweetRepository tweetRepository;
+
+    @Autowired
+    UserService userService;
+
+    // method extracted to be used in all controller's actions --> to have the userLogged attribute
+    public void userLog(HttpSession httpSession, Model model) {
+        Long userId = castObjectToLong(httpSession.getAttribute("id"));
+        User userLogged = userService.findById(userId);
+        model.addAttribute("userLog", userLogged);
+    }
 
     public Long castObjectToLong(Object object) {
         return Long.parseLong(object.toString());

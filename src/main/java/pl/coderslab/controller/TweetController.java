@@ -40,6 +40,7 @@ public class TweetController {
         if (httpSession.getAttribute("id") == null) {
             return "index";
         } else {
+            tweetService.userLog(httpSession, model);
             Tweet tweet = tweetService.findById(id);
             model.addAttribute("tweet", tweet);
             List<Comment> comments = commentService.findAllByTweet(tweet);

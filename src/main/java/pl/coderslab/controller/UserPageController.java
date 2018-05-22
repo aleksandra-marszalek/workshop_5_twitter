@@ -41,12 +41,6 @@ public class UserPageController {
     @Autowired
     MessageService messageService;
 
-    // method extracted to be used in all controller's actions --> to have the userLogged attribute
-    private void userLog(HttpSession httpSession, Model model) {
-        Long userId = tweetService.castObjectToLong(httpSession.getAttribute("id"));
-        User userLogged = userService.findById(userId);
-        model.addAttribute("userLog", userLogged);
-    }
 
 
     @GetMapping("/user/{id}/all")
@@ -54,7 +48,7 @@ public class UserPageController {
         if (httpSession.getAttribute("id") == null) {
             return "index";
         } else {
-            userLog(httpSession, model);
+            tweetService.userLog(httpSession, model);
             List<Tweet> tweets = tweetService.findAllByUser(id);
             model.addAttribute("usertweets", tweets);
             return "UserTweet";
@@ -67,7 +61,7 @@ public class UserPageController {
         if (httpSession.getAttribute("id")==null) {
             return "redirect:/index";
         } else {
-            userLog(httpSession, model);
+            tweetService.userLog(httpSession, model);
             List<User> allUsers = userService.findAll();
             model.addAttribute("users", allUsers);
             return "AllUsers";

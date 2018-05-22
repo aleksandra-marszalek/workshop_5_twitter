@@ -41,11 +41,15 @@ public class UserPageController {
     @Autowired
     MessageService messageService;
 
+
     @GetMapping("/user/{id}/all")
     public String getAll (@PathVariable Long id, HttpSession httpSession, Model model) {
         if (httpSession.getAttribute("id") == null) {
             return "index";
         } else {
+            Long userId = tweetService.castObjectToLong(httpSession.getAttribute("id"));
+            User userLogged = userService.findById(userId);
+            model.addAttribute("userLog", userLogged);
             List<Tweet> tweets = tweetService.findAllByUser(id);
             model.addAttribute("usertweets", tweets);
             return "UserTweet";

@@ -29,16 +29,21 @@ public class HomeController {
     @Autowired
     TweetService tweetService;
 
+
     @GetMapping("/")
-    public String home () {
-        return "Main";
+    public String home (HttpSession httpSession) {
+        if (httpSession.getAttribute("id") == null) {
+            return "login";
+        } else {
+            return "redirect:/home";
+        }
     }
 
 
     @GetMapping("/home")
     public String index (Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("id") == null) {
-            return "index";
+            return "login";
         } else {
             model.addAttribute("tweet", new Tweet());
             Long userId = tweetService.castObjectToLong(httpSession.getAttribute("id"));

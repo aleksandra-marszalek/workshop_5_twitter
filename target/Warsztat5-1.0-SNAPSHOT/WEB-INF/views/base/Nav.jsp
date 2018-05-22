@@ -19,6 +19,12 @@
                     <span class="nav-link-text">User Panel</span>
                 </a>
             </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                <a class="nav-link" href="/user/${userLog.id}/all">
+                    <i class="fa fa-fw fa-area-chart"></i>
+                    <span class="nav-link-text">My tweets</span>
+                </a>
+            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                 <a class="nav-link" href="/allUsers">
                     <i class="fa fa-fw fa-table"></i>

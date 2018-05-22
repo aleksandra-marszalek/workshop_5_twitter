@@ -17,6 +17,8 @@
 
 Hello, ${userLog.username}!
 
+<a href="/logout">Log out</a>
+
 <a href="/userpanel/${userLog.id}">Go to user panel</a>
 
 <a href="/allUsers">Go to all users</a>

@@ -57,6 +57,12 @@ public class HomeController {
         return "redirect:/user/"+userId+"/all";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.setAttribute("id", null);
+        return "redirect:/login";
+    }
+
 
     /////////////// MODEL ////////////////////
     @ModelAttribute("users")
